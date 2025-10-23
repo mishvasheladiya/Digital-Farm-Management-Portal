@@ -3,11 +3,6 @@
 if (!isset($base_url)) {
     $base_url = '/farm/';
 }
-
-// Define specific paths for the About Us section
-// We're going back to a single clickable video link for the best user experience (UX)
-$about_video_link = 'https://www.youtube.com/watch?v=YOUR_GREENAGRO_STORY'; // Use a dedicated video link
-$about_image_path = $base_url . 'assets/image/farm_team.jpg'; // Compelling image for the video poster
 ?>
 <!DOCTYPE html>
 <html lang="en">
