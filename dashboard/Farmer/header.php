@@ -321,23 +321,23 @@ function changeLanguage(lang) {
         
         <div class="lang-menu relative">
           <button><img src="https://cdn-icons-png.flaticon.com/512/44/44386.png" class="h-6 w-6"></button>
-<div class="lang-dropdown">
-<a onclick="changeLanguage('en')">🇬🇧 English</a>
-<a onclick="changeLanguage('hi')">🇮🇳 Hindi</a>
-<a onclick="changeLanguage('gu')">🇮🇳 Gujarati</a>
-<a onclick="changeLanguage('ta')">🇮🇳 Tamil</a>
-<a onclick="changeLanguage('te')">🇮🇳 Telugu</a>
-<a onclick="changeLanguage('kn')">🇮🇳 Kannada</a>
-<a onclick="changeLanguage('ml')">🇮🇳 Malayalam</a>
-<a onclick="changeLanguage('mr')">🇮🇳 Marathi</a>
-<a onclick="changeLanguage('bn')">🇮🇳 Bengali</a>
-<a onclick="changeLanguage('pa')">🇮🇳 Punjabi</a>
-<a onclick="changeLanguage('ur')">🇮🇳 Urdu</a>
-<a onclick="changeLanguage('or')">🇮🇳 Odia</a>
-<a onclick="changeLanguage('as')">🇮🇳 Assamese</a>
-<a onclick="changeLanguage('ne')">🇮🇳 Nepali</a>
-<a onclick="changeLanguage('si')">🇮🇳 Sindhi</a>
-<a onclick="changeLanguage('sa')">🇮🇳 Sanskrit</a>
+          <div class="lang-dropdown">
+          <a onclick="changeLanguage('en')">🇬🇧 English</a>
+          <a onclick="changeLanguage('hi')">🇮🇳 Hindi</a>
+          <a onclick="changeLanguage('gu')">🇮🇳 Gujarati</a>
+          <a onclick="changeLanguage('ta')">🇮🇳 Tamil</a>
+          <a onclick="changeLanguage('te')">🇮🇳 Telugu</a>
+          <a onclick="changeLanguage('kn')">🇮🇳 Kannada</a>
+          <a onclick="changeLanguage('ml')">🇮🇳 Malayalam</a>
+          <a onclick="changeLanguage('mr')">🇮🇳 Marathi</a>
+          <a onclick="changeLanguage('bn')">🇮🇳 Bengali</a>
+          <a onclick="changeLanguage('pa')">🇮🇳 Punjabi</a>
+          <a onclick="changeLanguage('ur')">🇮🇳 Urdu</a>
+          <a onclick="changeLanguage('or')">🇮🇳 Odia</a>
+          <a onclick="changeLanguage('as')">🇮🇳 Assamese</a>
+          <a onclick="changeLanguage('ne')">🇮🇳 Nepali</a>
+          <a onclick="changeLanguage('si')">🇮🇳 Sindhi</a>
+          <a onclick="changeLanguage('sa')">🇮🇳 Sanskrit</a>
 </div>
         </div>
 

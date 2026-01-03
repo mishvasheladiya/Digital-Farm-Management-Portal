@@ -324,11 +324,35 @@ require_once dirname(__DIR__) . '/config.php';
                         <span data-translate="support">Support</span>
                     </a>
                     
-                    <!-- Language Selector -->
-                    <button class="action-btn" id="languageBtn" title="Select Language" aria-label="Select Language" onclick="openLanguageModal(event)">
-                        <i class="fas fa-globe"></i>
-                        <span id="currentLanguage">En</span>
-                    </button>
+                    <div class="lang-menu relative group">
+    <button class="action-btn flex flex-col items-center" aria-label="Select Language">
+        <i class="fas fa-globe"></i>
+        <span class="text-[10px] font-bold uppercase" id="currentLangLabel">En</span>
+    </button>
+    
+    <div class="lang-dropdown absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 max-h-80 overflow-y-auto">
+        <div class="py-2">
+            <a onclick="changeLanguage('en', 'En')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇬🇧 English</a>
+            <a onclick="changeLanguage('hi', 'Hi')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Hindi</a>
+            <a onclick="changeLanguage('gu', 'Gu')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Gujarati</a>
+            <a onclick="changeLanguage('ta', 'Ta')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Tamil</a>
+            <a onclick="changeLanguage('te', 'Te')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Telugu</a>
+            <a onclick="changeLanguage('kn', 'Kn')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Kannada</a>
+            <a onclick="changeLanguage('ml', 'Ml')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Malayalam</a>
+            <a onclick="changeLanguage('mr', 'Mr')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Marathi</a>
+            <a onclick="changeLanguage('bn', 'Bn')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Bengali</a>
+            <a onclick="changeLanguage('pa', 'Pa')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Punjabi</a>
+            <a onclick="changeLanguage('ur', 'Ur')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Urdu</a>
+            <a onclick="changeLanguage('or', 'Or')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Odia</a>
+            <a onclick="changeLanguage('as', 'As')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Assamese</a>
+            <a onclick="changeLanguage('ne', 'Ne')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇳🇵 Nepali</a>
+            <a onclick="changeLanguage('sd', 'Sd')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Sindhi</a>
+            <a onclick="changeLanguage('sa', 'Sa')" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 cursor-pointer">🇮🇳 Sanskrit</a>
+        </div>
+    </div>
+</div>
+
+<div id="google_translate_element" style="display:none;"></div>
 
                     <!-- Light/Dark Mode Toggle -->
                     <!-- <button 
@@ -521,393 +545,31 @@ require_once dirname(__DIR__) . '/config.php';
         </div>
     </div>
     
-<script>
-        // ⚙️ CONFIGURATION - Add your Google Translate API Key here
-        const GOOGLE_TRANSLATE_API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your actual API key
-        
-        // Alternative: LibreTranslate (Self-hosted or free instance)
-        const LIBRETRANSLATE_API_URL = 'https://libretranslate.com/translate'; // Free API
-        const LIBRETRANSLATE_API_KEY = ''; // Optional, leave empty for free tier
-        
-        const MYMEMORY_API_URL = 'https://api.mymemory.translated.net/get';
-        // Choose translation service: 'google', 'libretranslate', or 'mymemory'
-        const TRANSLATION_SERVICE = 'mymemory';
+<script type="text/javascript">
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,hi,gu,ta,te,kn,ml,mr,bn,pa,ur,or,as,ne,sd,sa,fr,de,es',
+        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+        autoDisplay: false
+    }, 'google_translate_element');
+}
 
-        // Language data with ISO 639-1 codes
-        const languages = [
-            { code: 'en', name: 'English', flag: '🇬🇧', native: 'English' },
-            { code: 'hi', name: 'Hindi', flag: '🇮🇳', native: 'हिंदी' },
-            { code: 'gu', name: 'Gujarati', flag: '🇮🇳', native: 'ગુજરાતી' },
-            { code: 'ta', name: 'Tamil', flag: '🇮🇳', native: 'தமிழ்' },
-            { code: 'te', name: 'Telugu', flag: '🇮🇳', native: 'తెలుగు' },
-            { code: 'kn', name: 'Kannada', flag: '🇮🇳', native: 'ಕನ್ನಡ' },
-            { code: 'ml', name: 'Malayalam', flag: '🇮🇳', native: 'മലയാളം' },
-            { code: 'mr', name: 'Marathi', flag: '🇮🇳', native: 'मराठी' },
-            { code: 'bn', name: 'Bengali', flag: '🇮🇳', native: 'বাংলা' },
-            { code: 'pa', name: 'Punjabi', flag: '🇮🇳', native: 'ਪੰਜਾਬੀ' },
-            { code: 'ur', name: 'Urdu', flag: '🇮🇳', native: 'اردو' },
-            { code: 'or', name: 'Odia', flag: '🇮🇳', native: 'ଓଡ଼ିଆ' },
-            { code: 'as', name: 'Assamese', flag: '🇮🇳', native: 'অসমীয়া' },
-            { code: 'ne', name: 'Nepali', flag: '🇳🇵', native: 'नेपाली' },
-            { code: 'sd', name: 'Sindhi', flag: '🇮🇳', native: 'सिन्धी' },
-            { code: 'sa', name: 'Sanskrit', flag: '🇮🇳', native: 'संस्कृतम्' },
-            { code: 'es', name: 'Spanish', flag: '🇪🇸', native: 'Español' },
-            { code: 'fr', name: 'French', flag: '🇫🇷', native: 'Français' },
-            { code: 'de', name: 'German', flag: '🇩🇪', native: 'Deutsch' },
-            { code: 'zh-CN', name: 'Chinese', flag: '🇨🇳', native: '中文' },
-            { code: 'ja', name: 'Japanese', flag: '🇯🇵', native: '日本語' },
-            { code: 'ar', name: 'Arabic', flag: '🇸🇦', native: 'العربية' },
-            { code: 'ru', name: 'Russian', flag: '🇷🇺', native: 'Русский' },
-            { code: 'pt', name: 'Portuguese', flag: '🇵🇹', native: 'Português' }
-        ];
+function changeLanguage(lang, label) {
+    // 1. Update the UI text
+    document.getElementById('currentLangLabel').innerText = label;
 
-        let currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
-        let translationCache = JSON.parse(localStorage.getItem('translationCache') || '{}');
+    // 2. Find the Google Translate hidden dropdown
+    const select = document.querySelector('.goog-te-combo');
+    if (select) {
+        select.value = lang;
+        select.dispatchEvent(new Event('change'));
+    } else {
+        console.error("Google Translate not yet loaded");
+    }
+}
+</script>
 
-        // Google Translate API
-        async function translateWithGoogle(text, targetLang) {
-            if (!GOOGLE_TRANSLATE_API_KEY || GOOGLE_TRANSLATE_API_KEY === 'YOUR_API_KEY_HERE') {
-                console.error('❌ Google Translate API key not configured');
-                return text;
-            }
-
-            try {
-                const response = await fetch(
-                    `https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_TRANSLATE_API_KEY}`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            q: text,
-                            source: 'en',
-                            target: targetLang,
-                            format: 'text'
-                        })
-                    }
-                );
-                
-                const data = await response.json();
-                
-                if (data.data && data.data.translations && data.data.translations[0]) {
-                    return data.data.translations[0].translatedText;
-                }
-                
-                throw new Error('Translation failed');
-            } catch (error) {
-                console.error('Google Translate error:', error);
-                return text;
-            }
-        }
-
-        // LibreTranslate API
-        async function translateWithLibreTranslate(text, targetLang) {
-            try {
-                const response = await fetch(LIBRETRANSLATE_API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        q: text,
-                        source: 'en',
-                        target: targetLang,
-                        format: 'text',
-                        api_key: LIBRETRANSLATE_API_KEY
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.translatedText) {
-                    return data.translatedText;
-                }
-                
-                throw new Error('Translation failed');
-            } catch (error) {
-                console.error('LibreTranslate error:', error);
-                return text;
-            }
-        }
-
-        // MyMemory API (Free, no API key needed)
-        async function translateWithMyMemory(text, targetLang) {
-            try {
-                const response = await fetch(
-                    `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${targetLang}`
-                );
-                const data = await response.json();
-                
-                if (data.responseData && data.responseData.translatedText) {
-                    return data.responseData.translatedText;
-                }
-                
-                throw new Error('Translation failed');
-            } catch (error) {
-                console.error('MyMemory error:', error);
-                return text;
-            }
-        }
-
-        // Main translation function
-        async function translateText(text, targetLang) {
-            if (targetLang === 'en' || !text || text.trim() === '') return text;
-            
-            // Check cache first
-            const cacheKey = `${text}_${targetLang}_${TRANSLATION_SERVICE}`;
-            if (translationCache[cacheKey]) {
-                return translationCache[cacheKey];
-            }
-
-            let translated = text;
-
-            // Call appropriate translation service
-            switch (TRANSLATION_SERVICE) {
-                case 'google':
-                    translated = await translateWithGoogle(text, targetLang);
-                    break;
-                case 'libretranslate':
-                    translated = await translateWithLibreTranslate(text, targetLang);
-                    break;
-                case 'mymemory':
-                default:
-                    translated = await translateWithMyMemory(text, targetLang);
-                    break;
-            }
-
-            // Cache the translation
-            translationCache[cacheKey] = translated;
-            localStorage.setItem('translationCache', JSON.stringify(translationCache));
-            
-            return translated;
-        }
-
-        // Translate entire page
-        async function translatePage(targetLang) {
-            if (targetLang === 'en') {
-                location.reload();
-                return;
-            }
-
-            showTranslationLoading();
-
-            // Get all elements with data-translate attribute
-            const elements = document.querySelectorAll('[data-translate]');
-            
-            // Translate in batches to avoid rate limiting
-            const batchSize = 5;
-            for (let i = 0; i < elements.length; i += batchSize) {
-                const batch = Array.from(elements).slice(i, i + batchSize);
-                
-                await Promise.all(batch.map(async (element) => {
-                    const originalText = element.textContent.trim();
-                    if (originalText) {
-                        const translatedText = await translateText(originalText, targetLang);
-                        element.textContent = translatedText;
-                    }
-                }));
-                
-                // Small delay between batches
-                await new Promise(resolve => setTimeout(resolve, 200));
-            }
-
-            // Translate placeholders
-            const inputsWithPlaceholder = document.querySelectorAll('[data-translate-placeholder]');
-            for (const input of inputsWithPlaceholder) {
-                const originalPlaceholder = input.placeholder;
-                const translatedPlaceholder = await translateText(originalPlaceholder, targetLang);
-                input.placeholder = translatedPlaceholder;
-            }
-
-            hideTranslationLoading();
-        }
-
-        // Show/hide translation loading
-        function showTranslationLoading() {
-            document.getElementById('translationLoading').classList.add('show');
-        }
-
-        function hideTranslationLoading() {
-            document.getElementById('translationLoading').classList.remove('show');
-        }
-
-        // Initialize language modal
-        function initLanguageModal() {
-            const languageGrid = document.getElementById('languageGrid');
-            languageGrid.innerHTML = '';
-            
-            languages.forEach(lang => {
-                const isActive = lang.code === currentLanguage;
-                const languageOption = document.createElement('div');
-                languageOption.className = `language-option ${isActive ? 'active' : ''}`;
-                languageOption.innerHTML = `
-                    <div class="language-flag">${lang.flag}</div>
-                    <div class="language-info">
-                        <div class="language-name">${lang.name}</div>
-                        <div class="language-code">${lang.native}</div>
-                        ${isActive ? '<div class="current-language">Current</div>' : ''}
-                    </div>
-                `;
-                languageOption.onclick = () => selectLanguage(lang);
-                languageGrid.appendChild(languageOption);
-            });
-            
-            // Update button text
-            const currentLang = languages.find(lang => lang.code === currentLanguage);
-            if (currentLang) {
-                document.getElementById('currentLanguage').textContent = currentLang.name.substring(0, 2);
-            }
-        }
-
-        // Open language modal
-        function openLanguageModal(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            const modal = document.getElementById('languageModal');
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            initLanguageModal();
-            
-            // Highlight language button
-            document.getElementById('languageBtn').classList.add('language-active');
-        }
-
-        // Close language modal
-        function closeLanguageModal() {
-            const modal = document.getElementById('languageModal');
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-            
-            // Remove highlight
-            document.getElementById('languageBtn').classList.remove('language-active');
-        }
-
-        // Select language
-        function selectLanguage(lang) {
-            currentLanguage = lang.code;
-            localStorage.setItem('selectedLanguage', lang.code);
-            
-            // Update UI
-            document.getElementById('currentLanguage').textContent = lang.name.substring(0, 2);
-            
-            // Show notification
-            showNotification(`Language changed to ${lang.name} (${lang.native})`, 'success');
-            
-            // Close modal after delay
-            setTimeout(closeLanguageModal, 800);
-            
-            // Update all language options
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.classList.remove('active');
-            });
-            event.target.closest('.language-option').classList.add('active');
-            
-            // Here you would typically call your translation API
-            // translatePage(lang.code);
-        }
-
-        // Filter languages
-        function filterLanguages() {
-            const searchTerm = document.getElementById('languageSearch').value.toLowerCase();
-            const languageOptions = document.querySelectorAll('.language-option');
-            
-            languageOptions.forEach(option => {
-                const languageName = option.querySelector('.language-name').textContent.toLowerCase();
-                const languageNative = option.querySelector('.language-code').textContent.toLowerCase();
-                
-                if (languageName.includes(searchTerm) || languageNative.includes(searchTerm)) {
-                    option.style.display = 'flex';
-                } else {
-                    option.style.display = 'none';
-                }
-            });
-        }
-
-        // Translation function (placeholder - you'll need to implement actual translation)
-        function translatePage(languageCode) {
-            // This is where you would integrate with a translation API
-            // For now, just log the selected language
-            console.log(`Translating page to: ${languageCode}`);
-            
-            // Example of how you might implement translation:
-            // 1. You could use Google Translate API
-            // 2. Or implement your own translation dictionary
-            // 3. Or use i18n library
-        }
-
-        // Notification function
-        function showNotification(message, type = 'info') {
-            // Use your existing notification system
-            if (typeof window.showNotification === 'function') {
-                window.showNotification(message, type);
-            } else {
-                // Fallback notification
-                const notification = document.createElement('div');
-                notification.style.cssText = `
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: ${type === 'success' ? '#10b981' : '#ef4444'};
-                    color: white;
-                    padding: 12px 24px;
-                    border-radius: 8px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                    z-index: 10001;
-                    animation: slideIn 0.3s ease-out;
-                `;
-                notification.textContent = message;
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    notification.style.animation = 'slideOut 0.3s ease-out';
-                    setTimeout(() => notification.remove(), 300);
-                }, 3000);
-            }
-        }
-
-        // Close modal when clicking outside
-        document.addEventListener('click', function(e) {
-            const modal = document.getElementById('languageModal');
-            if (modal.style.display === 'block' && !e.target.closest('.language-content') && !e.target.closest('#languageBtn')) {
-                closeLanguageModal();
-            }
-        });
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && document.getElementById('languageModal').style.display === 'block') {
-                closeLanguageModal();
-            }
-            
-            // Alt + L to open language modal
-            if (e.altKey && e.key === 'l') {
-                e.preventDefault();
-                openLanguageModal(e);
-            }
-        });
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            initLanguageModal();
-            console.log('🌐 Language selector initialized');
-        });
-
-        // Keep existing support modal functions
-        function openSupportModal(event) {
-            event.preventDefault();
-            // Your existing support modal code
-        }
-
-        function closeSupportModal() {
-            // Your existing support modal code
-        }
-
-        function contactSupport(type) {
-            // Your existing support modal code
-        }
-    </script>
-    
-    <script src="<?php echo $base_url; ?>assets/js/main.js"></script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
